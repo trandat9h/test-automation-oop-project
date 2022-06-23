@@ -3,36 +3,29 @@ import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import org.json.simple.JSONObject;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.UUID;
 
 public class AuthHelper {
 
-    public String getAuthToken(String email, String password) {
-        // do something
-        JSONObject requestBody = new JSONObject();
-
-        requestBody.put("email", email);
-        requestBody.put("password", password);
-
+    public static String getAuthToken(JSONObject account){
         HTTPRequest httpRequest = new HTTPRequest(
                 "/login",
-                 requestBody
+                 account
                 );
 
         try {
             CustomResponse response = httpRequest.post();
+            return response.getResponseData().get("access_token").toString();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error on mocking a login session.");
+            return null;
         }
-        return null;
     }
 
     public static JSONObject createNewExistedRandomUser(){
 
-        JSONObject requestBody = createNewRandomUser();
+        JSONObject requestBody = generateNewRandomUser();
 
         HTTPRequest httpRequest = new HTTPRequest(
                 "/signup",
@@ -43,15 +36,15 @@ public class AuthHelper {
             CustomResponse response = httpRequest.post();
             if (Objects.equals(response.GetResponseCode(), "1000"))
                 return requestBody;
-            else throw new Exception();
+            else throw new Exception("Error on creating mock user request.");
         } catch (Exception e) {
-            // Do nothing
+            System.out.println(e);
             return null;
         }
 
     }
 
-    public static JSONObject createNewRandomUser(){
+    public static JSONObject generateNewRandomUser(){
 
         JSONObject requestBody = new JSONObject();
 
