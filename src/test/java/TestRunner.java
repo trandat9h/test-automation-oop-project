@@ -20,28 +20,8 @@ import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import org.junit.platform.reporting.legacy.xml.LegacyXmlReportGeneratingListener;
 
-import TestJUnitTests.MyFirstJUnitJupiterTests;
 public class TestRunner {
     public static void main(String args[]) {
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("email", "email");
-        requestBody.put("password", "password");
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                "/login",
-                null,
-                requestBody,
-                null);
-
-        try {
-            CustomResponse t = httpRequest.post();
-
-            System.out.println(t.GetResponseCode());
-        } catch (Exception e){
-            // do nothing
-            System.out.println(e);
-        }
-        System.out.println("End of Program");
 //        LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
 //                .selectors(
 //                        selectClass(MyFirstJUnitJupiterTests.class)
