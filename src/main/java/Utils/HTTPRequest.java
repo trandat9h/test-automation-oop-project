@@ -30,10 +30,26 @@ public class HTTPRequest {
     private JSONObject requestBody = null;
     private JSONObject responseBody;
 
-    public HTTPRequest(String endpoint, ArrayList <BasicNameValuePair> params, JSONObject requestBody, String token) {
+    public HTTPRequest(String endpoint, JSONObject requestBody, String token) {
         // Setup default header
         JSONObject headers = new JSONObject();
-        //headers.put("Authorization", "Bearer " + token);
+
+        headers.put("Authorization", "Bearer " + token);
+        headers.put("Content-Type", "application/json");
+
+        // Init all request attributes
+        this.endpoint = this.baseUrl + endpoint;
+        this.headers = headers;
+        if (params != null)
+            this.params = params;
+        if (requestBody != null)
+            this.requestBody = requestBody;
+    }
+
+    public HTTPRequest(String endpoint, JSONObject requestBody) {
+        // Setup default header
+        JSONObject headers = new JSONObject();
+
         headers.put("Content-Type", "application/json");
 
         // Init all request attributes
@@ -48,15 +64,14 @@ public class HTTPRequest {
     public CustomResponse get() throws Exception {
         HttpGet request = new HttpGet(this.endpoint);
 
+        request.addHeader("Content-Type","application/json" );
+
         // add request headers
         for (BasicNameValuePair param: this.params)
             request.addHeader(param.getName(), param.getValue());
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
              CloseableHttpResponse response = httpClient.execute(request);) {
-
-            // Get HttpResponse Status
-            System.out.println(response.getStatusLine().getStatusCode());
 
             HttpEntity entity = response.getEntity();
             Header headers = entity.getContentType();
