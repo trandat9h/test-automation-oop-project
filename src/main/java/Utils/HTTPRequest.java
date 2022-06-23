@@ -24,39 +24,25 @@ import java.util.List;
 
 public class HTTPRequest {
     public String baseUrl = "https://auction-app3.herokuapp.com/api";
-    private String endpoint;
-    private JSONObject headers;
-    private ArrayList<BasicNameValuePair> params = null;
+    private final String endpoint;
     private JSONObject requestBody = null;
     private JSONObject responseBody;
+    private String authenticationHeader = null;
 
     public HTTPRequest(String endpoint, JSONObject requestBody, String token) {
-        // Setup default header
-        JSONObject headers = new JSONObject();
-
-        headers.put("Authorization", "Bearer " + token);
-        headers.put("Content-Type", "application/json");
+        this.authenticationHeader = "Bearer " + token;
 
         // Init all request attributes
         this.endpoint = this.baseUrl + endpoint;
-        this.headers = headers;
-        if (params != null)
-            this.params = params;
+
         if (requestBody != null)
             this.requestBody = requestBody;
     }
 
     public HTTPRequest(String endpoint, JSONObject requestBody) {
-        // Setup default header
-        JSONObject headers = new JSONObject();
-
-        headers.put("Content-Type", "application/json");
-
         // Init all request attributes
         this.endpoint = this.baseUrl + endpoint;
-        this.headers = headers;
-        if (params != null)
-            this.params = params;
+
         if (requestBody != null)
             this.requestBody = requestBody;
     }
@@ -64,11 +50,10 @@ public class HTTPRequest {
     public CustomResponse get() throws Exception {
         HttpGet request = new HttpGet(this.endpoint);
 
+        // Add headers
         request.addHeader("Content-Type","application/json" );
-
-        // add request headers
-        for (BasicNameValuePair param: this.params)
-            request.addHeader(param.getName(), param.getValue());
+        if (this.authenticationHeader != null)
+            request.addHeader("Authorization", this.authenticationHeader);
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
              CloseableHttpResponse response = httpClient.execute(request);) {
@@ -85,7 +70,10 @@ public class HTTPRequest {
     public CustomResponse post() throws Exception {
         HttpPost postRequest = new HttpPost(this.endpoint);
 
+        // Add headers
         postRequest.addHeader("Content-Type","application/json" );
+        if (this.authenticationHeader != null)
+            postRequest.addHeader("Authorization", this.authenticationHeader);
 
         postRequest.setEntity(new StringEntity(this.requestBody.toString()));
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
