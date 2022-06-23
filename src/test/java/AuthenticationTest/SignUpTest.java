@@ -1,27 +1,21 @@
-package TestAuthentication;
+package AuthenticationTest;
 
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import Utils.HelperMethods.AuthHelper;
 import org.json.simple.JSONObject;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import Base.TestBase;
-import Utils.HelperMethods.AuthHelper;
+import Base.BaseTest;
 
-public class TestSignUp extends TestBase{
+public class SignUpTest extends BaseTest {
     private static final String endpoint = "/signup";
 
     private static JSONObject buildSignUpRequestBody(
@@ -59,7 +53,7 @@ public class TestSignUp extends TestBase{
 
     @Test
     public void TestSignUpSuccessfully() throws Exception{
-        JSONObject requestBody = AuthHelper.createNewRandomUser();
+        JSONObject requestBody = AuthHelper.generateNewRandomUser();
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint,
