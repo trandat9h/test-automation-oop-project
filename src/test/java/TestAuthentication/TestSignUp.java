@@ -2,6 +2,7 @@ package TestAuthentication;
 
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
+import Utils.HelperMethods.AuthHelper;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -17,17 +18,11 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-public class TestSignUp {
+import Base.TestBase;
+import Utils.HelperMethods.AuthHelper;
+
+public class TestSignUp extends TestBase{
     private static final String endpoint = "/signup";
-    private static JSONObject createdAccount = buildSignUpRequestBody(
-            "existed@gmail.com",
-            "123",
-            "123",
-            "k",
-            "existed",
-            "12",
-            null
-    );
 
     private static JSONObject buildSignUpRequestBody(
             String email,
@@ -59,45 +54,24 @@ public class TestSignUp {
 
 //    @BeforeAll
 //    private static void Setup() throws Exception{
-//        // Create an existed account
-//        JSONObject existedAccount = createdAccount;
 //
-//        HTTPRequest httpRequest = new HTTPRequest(
-//                endpoint,
-//                null,
-//                existedAccount,
-//                null);
-//        try {
-//            CustomResponse response = httpRequest.post();
-//        } catch (Exception e) {
-//            throw new Exception("Error on creating existed account");
-//        }
 //    }
 
     @Test
     public void TestSignUpSuccessfully() throws Exception{
-        JSONObject requestBody = buildSignUpRequestBody(
-                "tra8@gmail.com",
-                "Tra",
-                "Tra",
-                "address12",
-                "tt",
-                "0940",
-                null);
+        JSONObject requestBody = AuthHelper.createNewRandomUser();
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint,
-                null,
-                requestBody,
-                null
+                requestBody
         );
 
         try {
             CustomResponse response = httpRequest.post();
 
-            assertEquals(response.getStatusCode(), 200);
-            assertEquals(response.getResponseMessage(), "OK");
-            assertEquals(response.GetResponseCode(), "1000");
+            assertEquals(200, response.getStatusCode());
+            assertEquals("OK", response.getResponseMessage());
+            assertEquals("1000", response.GetResponseCode());
             assertNotNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on creating new account");
@@ -125,17 +99,15 @@ public class TestSignUp {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint,
-                null,
-                createdAccount,
-                null
+                createdAccount
         );
 
         try {
             CustomResponse response = httpRequest.post();
 
-            assertEquals(response.getStatusCode(), 200);
+            assertEquals(200, response.getStatusCode());
             assertNotNull(response.getResponseMessage());
-            assertEquals(response.GetResponseCode(), "1001");
+            assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on creating new account");
