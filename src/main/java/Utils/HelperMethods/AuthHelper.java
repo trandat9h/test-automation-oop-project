@@ -66,6 +66,112 @@ public class AuthHelper {
         return "randomemail" + uuidAsString + "@gmail.com";
     }
 
+    private static String generateRandomLongEmail() {
+        String str = "";
+        for(int i = 0;i < 257; i++){
+            str += "a";
+        }
+        return str;
+    }
 
+
+    public static JSONObject generateNewRandomUserNoEmail(){
+
+        JSONObject requestBody = new JSONObject();
+
+        requestBody.put("email", null);
+        requestBody.put("password", "password");
+        requestBody.put("re_pass", "password");
+        requestBody.put("name", "randomUser");
+        requestBody.put("phone", "123456789");
+
+        return requestBody;
+    }
+
+    public static JSONObject createNewExistedRandomUserNoEmail(){
+
+        JSONObject requestBody = generateNewRandomUserNoEmail();
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                "/signup",
+                requestBody
+        );
+
+        try {
+            CustomResponse response = httpRequest.post();
+            if (Objects.equals(response.GetResponseCode(), "1001"))
+                return requestBody;
+            else throw new Exception("Error on creating mock user request.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public static JSONObject generateNewRandomUserNoPassword(){
+
+        JSONObject requestBody = new JSONObject();
+
+        requestBody.put("email", generateRandomEmail());
+        requestBody.put("password", null);
+        requestBody.put("re_pass", "password");
+        requestBody.put("name", "randomUser");
+        requestBody.put("phone", "123456789");
+
+        return requestBody;
+    }
+
+    public static JSONObject createNewExistedRandomUserNoPassword(){
+
+        JSONObject requestBody = generateNewRandomUserNoPassword();
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                "/signup",
+                requestBody
+        );
+
+        try {
+            CustomResponse response = httpRequest.post();
+            if (Objects.equals(response.GetResponseCode(), "1001"))
+                return requestBody;
+            else throw new Exception("Error on creating mock user request.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public static JSONObject generateNewRandomUserEmailLong(){
+
+        JSONObject requestBody = new JSONObject();
+
+        requestBody.put("email", generateRandomLongEmail());
+        requestBody.put("password", "password");
+        requestBody.put("re_pass", "password");
+        requestBody.put("name", "randomUser");
+        requestBody.put("phone", "123456789");
+
+        return requestBody;
+    }
+
+    public static JSONObject createNewExistedRandomUserEmailLong(){
+
+        JSONObject requestBody = generateNewRandomUserEmailLong();
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                "/signup",
+                requestBody
+        );
+
+        try {
+            CustomResponse response = httpRequest.post();
+            if (Objects.equals(response.GetResponseCode(), "1001"))
+                return requestBody;
+            else throw new Exception("Error on creating mock user request.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 
 }
