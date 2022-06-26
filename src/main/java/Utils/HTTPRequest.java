@@ -39,6 +39,13 @@ public class HTTPRequest {
             this.requestBody = requestBody;
     }
 
+    public HTTPRequest(String endpoint, String token) {
+        this.authenticationHeader = "Bearer " + token;
+
+        // Init all request attributes
+        this.endpoint = this.baseUrl + endpoint;
+    }
+
     public HTTPRequest(String endpoint, JSONObject requestBody) {
         // Init all request attributes
         this.endpoint = this.baseUrl + endpoint;

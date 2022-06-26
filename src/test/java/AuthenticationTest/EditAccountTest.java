@@ -1,6 +1,6 @@
 package AuthenticationTest;
 
-import static Utils.HelperMethods.AuthHelper.getAuthToken;
+import static Utils.HelperMethods.AuthHelper.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -51,19 +51,18 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountSuccessfully() throws Exception{
         String token = getAuthToken(createdAccount);
 
-
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint,
                 createdAccount,
-                token
+                authToken
         );
 
         try {
             CustomResponse response = httpRequest.post();
 
-            assertEquals(response.getStatusCode(), 200);
+            assertEquals(200, response.getStatusCode());
             assertEquals("OK", response.getResponseMessage());
-            assertEquals(response.GetResponseCode(), "1000");
+            assertEquals("1001", response.GetResponseCode());
             assertNotNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on editing account");
@@ -71,9 +70,150 @@ public class EditAccountTest extends BaseTest {
     }
 
 
-    @Test
-    public void TestEditAccountFail() throws Exception{
-        String token = getAuthToken(createdAccount);
+    @Test //NAME: khong dien ten
+    public void TestEditAccountFailNoName() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                "tra8@gmail.com",
+                "Tra",
+                "Tra",
+                "address12",
+                null,
+                "0940",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //NAME: ten qua dai
+    public void TestEditAccountFailLongName() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                "tra8@gmail.com",
+                "Tra",
+                "Tra",
+                "address12",
+                generateRandomLongString(0),
+                "0940",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //EMAIL: No email
+    public void TestEditAccountFailNoEmail() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                null,
+                "Tra",
+                "Tra",
+                "address12",
+                "tt",
+                "0940",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //EMAIL: wrong type email
+    public void TestEditAccountFailWrongTypeEmail() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                "not_an_email",
+                "Tra",
+                "Tra",
+                "address12",
+                "tt",
+                "0940",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            //assertEquals("1001", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //EMAIL: email too long
+    public void TestEditAccountFailTooLongEmail() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                generateRandomLongString(1),
+                "Tra",
+                "Tra",
+                "address12",
+                "tt",
+                "0940",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            //assertEquals("1001", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //EMAIL: same email
+    public void TestEditAccountFailSameEmail() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 "tra8@gmail.com",
                 "Tra",
@@ -86,14 +226,189 @@ public class EditAccountTest extends BaseTest {
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint,
                 requestBody,
-                token
+                authToken
         );
         try {
             CustomResponse response = httpRequest.post();
 
-            assertEquals(response.getStatusCode(), 200);
+            assertEquals(200, response.getStatusCode());
+            //assertEquals("1001", response.getResponseMessage());
             assertNotNull(response.getResponseMessage());
-            assertEquals(response.GetResponseCode(), "1001");
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //PHONE: no phone
+    public void TestEditAccountFailNoPhone() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                generateRandomEmail(),
+                "Tra",
+                "Tra",
+                "address12",
+                "tt",
+                null,
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            //assertEquals("1001", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //PHONE: too long phone
+    public void TestEditAccountFailTooLongPhone() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                generateRandomEmail(),
+                "Tra",
+                "Tra",
+                "address12",
+                "tt",
+                generateRandomLongString(0),
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            //assertEquals("1001", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //ADDRESS: too long address
+    public void TestEditAccountFailTooLongAddress() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                generateRandomEmail(),
+                "Tra",
+                "Tra",
+                generateRandomLongString(0), //somehow too long string doesnt work on this shit?
+                "tt",
+                "0090",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            //assertEquals("1001", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //PASSWORD: too long password
+    public void TestEditAccountFailTooLongPassword() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(//password dai qua thi khong chay
+                generateRandomEmail(),
+                "000000000000000000000000000000000000000000000000000",
+                "Tra",
+                "address12",
+                "tt",
+                "0090",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            assertEquals("1001", response.getResponseMessage());
+            //assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //PASSWORD: no password
+    public void TestEditAccountFailNoPassword() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody( //khong co pass khong chay
+                generateRandomEmail(),
+                "",
+                "tra",
+                "address12",
+                "tt",
+                "0090",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            assertEquals("1001", response.getResponseMessage());
+            //assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //RE_PASS: no repass
+    public void TestEditAccountFailNoRepass() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(//re_pass nhap nhu the nao cung duoc, server luon tra ve dung :v
+                generateRandomEmail(),
+                "tra",
+                generateRandomLongString(0),
+                "address12",
+                "tt",
+                "0090",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            assertEquals("1001", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on editing account");
