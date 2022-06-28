@@ -2,23 +2,17 @@ package Utils;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -37,6 +31,13 @@ public class HTTPRequest {
 
         if (requestBody != null)
             this.requestBody = requestBody;
+    }
+
+    public HTTPRequest(String endpoint, String token) {
+        this.authenticationHeader = "Bearer " + token;
+
+        // Init all request attributes
+        this.endpoint = this.baseUrl + endpoint;
     }
 
     public HTTPRequest(String endpoint, JSONObject requestBody) {
@@ -87,7 +88,9 @@ public class HTTPRequest {
         if (this.authenticationHeader != null)
             postRequest.addHeader("Authorization", this.authenticationHeader);
 
-        postRequest.setEntity(new StringEntity(this.requestBody.toString()));
+        if (this.requestBody != null)
+            postRequest.setEntity(new StringEntity(this.requestBody.toString()));
+
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
              CloseableHttpResponse response = httpClient.execute(postRequest);
            ) {
@@ -97,7 +100,7 @@ public class HTTPRequest {
         }
 
     }
-    public JSONObject convertStringToJSONObject(String body) throws Exception {
+    public JSONObject convertStringToJSONObject(String body){
         if (body== null) return null;
 
         JSONParser parser = new JSONParser();
@@ -105,7 +108,7 @@ public class HTTPRequest {
         try {
             return (JSONObject) parser.parse(body);
         } catch (ParseException e) {
-            throw new Exception(e);
+            return null;
         }
     }
 

@@ -60,7 +60,7 @@ public class AuthHelper {
 
     }
 
-    private static String generateRandomEmail() {
+    public static String generateRandomEmail() {
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
 
@@ -68,12 +68,17 @@ public class AuthHelper {
         return "randomemail" + uuidAsString + "@gmail.com";
     }
 
-    private static String generateRandomString() {
-        int len = 10; // Độ dài của String random
-        byte[] array = new byte[len];
-        new Random().nextBytes(array);
-        String generatedString = new String(array, Charset.forName("UTF-8"));
-        return generatedString;
+    public static String generateRandomLongString(int isEmail) {
+        String str = "";
+        for(int i = 0;i < 300; i++){
+            str += "a";
+        }
+
+        if(isEmail == 1)
+            return str + generateRandomEmail();
+
+        return str;
     }
+
 
 }
