@@ -52,6 +52,13 @@ public class HTTPRequest {
         this.endpoint = this.baseUrl + endpoint;
     }
 
+    public HTTPRequest(String endpoint, String token) {
+        this.authenticationHeader = "Bearer " + token;
+
+        // Init all request attributes
+        this.endpoint = this.baseUrl + endpoint;
+    }
+
     public CustomResponse get() throws Exception {
         HttpGet request = new HttpGet(this.endpoint);
 

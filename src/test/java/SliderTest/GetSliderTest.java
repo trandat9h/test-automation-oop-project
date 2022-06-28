@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.json.simple.JSONObject;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GetSliderTest extends BaseTest {
+public class GetSliderTest {
     private static final String endpoint = "/slider";
 
     @Test
-    public void TestGetSliderNoToken () throws Exception{
+    public void TestGetSlider () throws Exception{
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint
         );

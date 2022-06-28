@@ -5,6 +5,8 @@ import org.json.simple.JSONObject;
 
 import java.util.Objects;
 import java.util.UUID;
+import java.nio.charset.Charset;
+import java.util.Random;
 
 public class AuthHelper {
 
@@ -66,6 +68,12 @@ public class AuthHelper {
         return "randomemail" + uuidAsString + "@gmail.com";
     }
 
-
+    private static String generateRandomString() {
+        int len = 10; // Độ dài của String random
+        byte[] array = new byte[len];
+        new Random().nextBytes(array);
+        String generatedString = new String(array, Charset.forName("UTF-8"));
+        return generatedString;
+    }
 
 }
