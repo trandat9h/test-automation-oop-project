@@ -88,7 +88,7 @@ public class HTTPRequest {
         }
 
     }
-    public JSONObject convertStringToJSONObject(String body) throws Exception {
+    public JSONObject convertStringToJSONObject(String body){
         if (body== null) return null;
 
         JSONParser parser = new JSONParser();
@@ -96,7 +96,7 @@ public class HTTPRequest {
         try {
             return (JSONObject) parser.parse(body);
         } catch (ParseException e) {
-            throw new Exception(e);
+            return null;
         }
     }
 

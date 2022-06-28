@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 public class CustomResponse {
     private final int statusCode;
     private final JSONObject body;
-    
 
     public CustomResponse (int statusCode, JSONObject body) {
         this.statusCode = statusCode;
