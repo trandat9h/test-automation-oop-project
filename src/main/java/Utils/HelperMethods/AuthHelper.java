@@ -68,14 +68,13 @@ public class AuthHelper {
 
     public static String generateRandomLongString(int isEmail) {
         String str = "";
-        for(int i = 0;i < 257; i++){
+        for(int i = 0;i < 300; i++){
             str += "a";
         }
-        if(isEmail == 1){
-            UUID uuid = UUID.randomUUID();
-            String uuidAsString = uuid.toString();
-            return str + uuidAsString + "@gmail.com";
-        }
+
+        if(isEmail == 1)
+            return str + generateRandomEmail();
+
         return str;
     }
 

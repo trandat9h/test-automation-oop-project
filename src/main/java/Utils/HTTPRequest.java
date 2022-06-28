@@ -82,7 +82,9 @@ public class HTTPRequest {
         if (this.authenticationHeader != null)
             postRequest.addHeader("Authorization", this.authenticationHeader);
 
-        postRequest.setEntity(new StringEntity(this.requestBody.toString()));
+        if (this.requestBody != null)
+            postRequest.setEntity(new StringEntity(this.requestBody.toString()));
+
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
              CloseableHttpResponse response = httpClient.execute(postRequest);
            ) {

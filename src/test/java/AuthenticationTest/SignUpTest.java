@@ -31,11 +31,19 @@ public class SignUpTest extends BaseTest {
             String avatar) {
         JSONObject requestBody = new JSONObject();
 
-        requestBody.put("email", email);
-        requestBody.put("password", password);
-        requestBody.put("re_pass", re_pass);
-        requestBody.put("name", name);
-        requestBody.put("phone", phone);
+        if (email != null)
+            requestBody.put("email", email);
+        if (password != null)
+            requestBody.put("password", password);
+        if (re_pass != null)
+            requestBody.put("re_pass", re_pass);
+        if (address != null)
+            requestBody.put("address", address);
+        if (name != null)
+            requestBody.put("name", name);
+        if (phone != null)
+            requestBody.put("phone", phone);
+
 
         return requestBody;
     }
@@ -57,7 +65,7 @@ public class SignUpTest extends BaseTest {
     @Test
     public void TestSignUpSuccessfully() throws Exception{
         JSONObject requestBody = buildSignUpRequestBody(
-                "tra3@gmail.com",
+                generateRandomEmail(),
                 "Tra",
                 "Tra",
                 "address12",
@@ -316,7 +324,7 @@ public class SignUpTest extends BaseTest {
                 generateRandomEmail(),
                 "Tra",
                 "Tra",
-                generateRandomLongString(0), //somehow too long string doesnt work on this shit?
+                generateRandomLongString(0), //somehow too long string does not work on this ?
                 "tt",
                 "0090",
                 null);
@@ -356,8 +364,7 @@ public class SignUpTest extends BaseTest {
             CustomResponse response = httpRequest.post();
 
             assertEquals(200, response.getStatusCode());
-            assertEquals("1001", response.getResponseMessage());
-            //assertNotNull(response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
             assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
         } catch (Exception e) {
@@ -383,8 +390,7 @@ public class SignUpTest extends BaseTest {
             CustomResponse response = httpRequest.post();
 
             assertEquals(200, response.getStatusCode());
-            assertEquals("1001", response.getResponseMessage());
-            //assertNotNull(response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
             assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
         } catch (Exception e) {
@@ -410,7 +416,6 @@ public class SignUpTest extends BaseTest {
             CustomResponse response = httpRequest.post();
 
             assertEquals(200, response.getStatusCode());
-            assertEquals("1001", response.getResponseMessage());
             assertNotNull(response.getResponseMessage());
             assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
