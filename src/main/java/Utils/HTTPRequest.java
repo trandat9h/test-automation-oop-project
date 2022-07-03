@@ -48,6 +48,11 @@ public class HTTPRequest {
             this.requestBody = requestBody;
     }
 
+    public HTTPRequest(String endpoint){
+        this.endpoint = this.baseUrl + endpoint;
+    }
+
+
     public CustomResponse get() throws Exception {
         HttpGet request = new HttpGet(this.endpoint);
 
