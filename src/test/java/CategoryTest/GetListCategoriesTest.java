@@ -5,8 +5,7 @@ import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GetListCategoriesTest extends BaseTest {
     private static final String endpoint = "/categories";
@@ -21,7 +20,7 @@ public class GetListCategoriesTest extends BaseTest {
 
             assertEquals(200, response.getStatusCode());
             assertEquals("OK", response.getResponseMessage());
-            assertNotNull(response.getResponseData());
+            assertNotNull(response.getResponseDataArray());
         } catch (Exception e) {
             throw new Exception("Error on get list categories");
         }

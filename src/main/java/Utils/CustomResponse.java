@@ -1,5 +1,6 @@
 package Utils;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class CustomResponse {
@@ -35,6 +36,12 @@ public class CustomResponse {
 
     public JSONObject getResponseData () {
         JSONObject data = (JSONObject) this.body.get("data");
+        // Exception handling required
+        return data;
+    }
+
+    public JSONArray getResponseDataArray () {
+        JSONArray data = (JSONArray) this.body.get("data");
         // Exception handling required
         return data;
     }
