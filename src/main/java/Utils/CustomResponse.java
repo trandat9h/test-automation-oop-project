@@ -38,15 +38,4 @@ public class CustomResponse {
         // Exception handling required
         return data;
     }
-
-
-
-
-
-
-
-
-
-
-
 }
