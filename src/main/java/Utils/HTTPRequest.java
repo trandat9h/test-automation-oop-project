@@ -8,6 +8,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -48,7 +49,8 @@ public class HTTPRequest {
             this.requestBody = requestBody;
     }
 
-    public HTTPRequest(String endpoint){
+    public HTTPRequest(String endpoint) {
+        // Init all request attributes
         this.endpoint = this.baseUrl + endpoint;
     }
 
@@ -61,7 +63,10 @@ public class HTTPRequest {
         if (this.authenticationHeader != null)
             request.addHeader("Authorization", this.authenticationHeader);
 
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+        try (CloseableHttpClient httpClient = HttpClients
+                .custom()
+                .setRedirectStrategy(new LaxRedirectStrategy())
+                .build();
              CloseableHttpResponse response = httpClient.execute(request);) {
 
             HttpEntity entity = response.getEntity();
@@ -78,13 +83,20 @@ public class HTTPRequest {
 
         // Add headers
         postRequest.addHeader("Content-Type","application/json" );
+        postRequest.addHeader("Accept", "*/*");
+
         if (this.authenticationHeader != null)
             postRequest.addHeader("Authorization", this.authenticationHeader);
+        else
+            postRequest.addHeader("Authorization", "");
 
         if (this.requestBody != null)
             postRequest.setEntity(new StringEntity(this.requestBody.toString()));
 
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+        try (CloseableHttpClient httpClient = HttpClients
+                .custom()
+                .setRedirectStrategy(new LaxRedirectStrategy())
+                .build();
              CloseableHttpResponse response = httpClient.execute(postRequest);
            ) {
 
