@@ -5,8 +5,6 @@ import org.json.simple.JSONObject;
 
 import java.util.Objects;
 import java.util.UUID;
-import java.nio.charset.Charset;
-import java.util.Random;
 
 public class AuthHelper {
 
