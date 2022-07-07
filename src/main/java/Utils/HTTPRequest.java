@@ -24,10 +24,6 @@ public class HTTPRequest {
     private JSONObject responseBody;
     private String authenticationHeader = null;
 
-    public HTTPRequest(String endpoint) {
-        this.endpoint = this.baseUrl + endpoint;
-    }
-
     public HTTPRequest(String endpoint, JSONObject requestBody, String token) {
         this.authenticationHeader = "Bearer " + token;
 

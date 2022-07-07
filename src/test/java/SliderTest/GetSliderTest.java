@@ -4,7 +4,6 @@ import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import org.junit.jupiter.api.Test;
-import org.json.simple.JSONObject;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GetSliderTest extends BaseTest{
