@@ -57,7 +57,7 @@ public class ContactTest extends BaseTest {
             assertEquals(200, response.getStatusCode()); //fail code:500
             assertEquals("OK", response.getResponseMessage());
             assertEquals("1000", response.GetResponseCode());
-            assertNull(response.getResponseData());
+            assertNotNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on contact");
         }
