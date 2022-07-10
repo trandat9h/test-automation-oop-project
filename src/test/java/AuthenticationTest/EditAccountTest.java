@@ -392,9 +392,65 @@ public class EditAccountTest extends BaseTest {
     @Test //RE_PASS: no repass
     public void TestEditAccountFailNoRepass() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
-                generateRandomEmail(),
+                "tra8@gmail.com",
                 "tra",
                 null,
+                "address12",
+                "tt",
+                "0090",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //RE_PASS: re_pass doesn't match password
+    public void TestEditAccountFailNoMatchingRepass() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                "tra8@gmail.com",
+                "tra",
+                "abc",
+                "address12",
+                "tt",
+                "0090",
+                null);
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody,
+                authToken
+        );
+        try {
+            CustomResponse response = httpRequest.post();
+
+            assertEquals(200, response.getStatusCode());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1001", response.GetResponseCode());
+            assertNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on editing account");
+        }
+    }
+
+    @Test //RE_PASS: no repass
+    public void TestEditAccountFailTooLongRepass() throws Exception{
+        JSONObject requestBody = buildEditAccountRequestBody(
+                "tra8@gmail.com",
+                "tra",
+                generateRandomLongString(0),
                 "address12",
                 "tt",
                 "0090",

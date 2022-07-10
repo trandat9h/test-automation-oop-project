@@ -11,7 +11,7 @@ public class GetListCategoriesTest extends BaseTest {
     private static final String endpoint = "/categories";
     @Test
     void TestGetListCategoriesSuccessfully() throws Exception{
-        HTTPRequest httpRequest = new HTTPRequest(//brand works fine but categories doesnt
+        HTTPRequest httpRequest = new HTTPRequest(
                 endpoint
         );
 
