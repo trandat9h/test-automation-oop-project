@@ -18,11 +18,16 @@ import org.json.simple.parser.ParseException;
 
 
 public class HTTPRequest {
-    public String baseUrl = "https://auction-app3.herokuapp.com/api";
+    public static String baseUrl = "https://auction-app3.herokuapp.com/api";
     private final String endpoint;
     private JSONObject requestBody = null;
     private JSONObject responseBody;
     private String authenticationHeader = null;
+
+    public static void setURL (String url) {
+        if (url != null)
+            baseUrl = url;
+    }
 
     public HTTPRequest(String endpoint, JSONObject requestBody, String token) {
         this.authenticationHeader = "Bearer " + token;
@@ -115,6 +120,11 @@ public class HTTPRequest {
         } catch (ParseException e) {
             return null;
         }
+    }
+
+    public void setUrl (String url) {
+        if (!url.equals(""))
+            baseUrl = url;
     }
 
 }
