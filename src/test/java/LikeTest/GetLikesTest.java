@@ -18,10 +18,10 @@ public class GetLikesTest extends BaseTest {
         return "?index=" + index +"&count="+count;
     }
     @Test
-    public void TestGetListLike_Successfully() throws Exception {
+    public void TestGetListLikeSuccessfully() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "1" + params("1","10"),
+                endpoint + "1" + params("1","10"), //    /likes/{statusId}
                 devUser3_Token
         );
 
@@ -36,10 +36,10 @@ public class GetLikesTest extends BaseTest {
         }
     }
     @Test
-    public void TestGetListLike_NoTokenFailed() throws Exception {
+    public void TestGetListLikeNoTokenFailed() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "1" + params("1","10")
+                endpoint + "1" + params("1","10")    //    /likes/{statusId}
         );
 
         try {
@@ -52,10 +52,10 @@ public class GetLikesTest extends BaseTest {
         }
     }
     @Test
-    public void TestGetListLike_NoCount() throws Exception {
+    public void TestGetListLikeNoCount() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "1"+ params("1",null),
+                endpoint + "1"+ params("1",null),   //    /likes/{statusId}
                 devUser3_Token
         );
 
@@ -67,10 +67,10 @@ public class GetLikesTest extends BaseTest {
         }
     }
     @Test
-    public void TestGetListLike_NoIndexFailed() throws Exception {
+    public void TestGetListLikeNoIndexFailed() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "1"+params(null,"10"),
+                endpoint + "1"+ params(null,"10"), //    /likes/{statusId}
                 devUser3_Token
         );
 
@@ -82,10 +82,10 @@ public class GetLikesTest extends BaseTest {
         }
     }
     @Test
-    public void TestGetListLike_NoCountNoIndexFailed() throws Exception {
+    public void TestGetListLikeNoCountNoIndexFailed() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "1" +params(null,null),
+                endpoint + "1" + params(null,null), //    /likes/{statusId}
                 devUser3_Token
         );
 
@@ -97,10 +97,10 @@ public class GetLikesTest extends BaseTest {
         }
     }
     @Test
-    public void TestGetListLike_NocountNoIndexNoTokenFailed() throws Exception {
+    public void TestGetListLikeNocountNoIndexNoTokenFailed() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "1"+params(null,null)
+                endpoint + "1"+ params(null,null) //    /likes/{statusId}
         );
 
         try {
@@ -108,7 +108,7 @@ public class GetLikesTest extends BaseTest {
             assertEquals(200, response.getStatusCode());
             assertNotNull(response.getResponseMessage());
             assertEquals("1004", response.GetResponseCode());
-            assertNotNull(response.getResponseData());
+            assertNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on Getting List Like.");
         }

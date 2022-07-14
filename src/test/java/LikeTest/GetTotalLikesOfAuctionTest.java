@@ -11,10 +11,10 @@ public class GetTotalLikesOfAuctionTest extends BaseTest {
     private static String endpoint = "/totalLikes/";
 
     @Test
-    public void TestGetTotalLikes_Successfully() throws Exception {
+    public void TestGetTotalLikesSuccessfully() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "136",
+                endpoint + "136",//  /totalLikes/{auctionID}
                 devUser2_Token
         );
 
@@ -29,7 +29,7 @@ public class GetTotalLikesOfAuctionTest extends BaseTest {
         }
     }
     @Test
-    public void TestGetTotalLikes_NoTokenSuccessfully() throws Exception {
+    public void TestGetTotalLikesNoTokenSuccessfully() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "136"
@@ -46,7 +46,7 @@ public class GetTotalLikesOfAuctionTest extends BaseTest {
         }
     }
     @Test
-    public void TestGetTotalLikes_NotExistedAuctionID() throws Exception {
+    public void TestGetTotalLikesNotExistedAuctionID() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "100000",

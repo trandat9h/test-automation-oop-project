@@ -12,10 +12,10 @@ public class LikeAuctionTest extends BaseTest  {
     private static String endpoint = "/updateLike/";
 
     @Test
-    public void TestLikeAuction_NoToken() throws Exception { //chưa đăng nhập
+    public void TestLikeAuctionNoToken() throws Exception { //chưa đăng nhập
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint+ "136"
+                endpoint + "136" //  /updateLike/{auctionID}
         );
 
         try {
@@ -29,7 +29,7 @@ public class LikeAuctionTest extends BaseTest  {
         }
     }
     @Test
-    public void TestLikeAution_Successfully() throws Exception {
+    public void TestLikeAutionSuccessfully() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "136",
@@ -47,7 +47,7 @@ public class LikeAuctionTest extends BaseTest  {
         }
     }
     @Test//Test fail do server
-    public void TestLikeAuction_NotExistedAuctionIDFailed() throws Exception { //AuctionID ko tồn tại tuy nhiên vẫn trả về OK
+    public void TestLikeAuctionNotExistedAuctionIDFailed() throws Exception { //AuctionID ko tồn tại tuy nhiên vẫn trả về OK
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "100000",

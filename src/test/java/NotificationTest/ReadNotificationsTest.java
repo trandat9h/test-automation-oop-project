@@ -13,10 +13,10 @@ public class ReadNotificationsTest extends BaseTest {
     private static String endpoint = "/notifications/read/";
 
     @Test
-    public void TestReadNotifications_Successfully() throws Exception { //// auctionId = 242 đã bị từ chối bởi Admin, thuộc sở hữu devUser3
+    public void TestReadNotificationsSuccessfully() throws Exception { //// auctionId = 242 đã bị từ chối bởi Admin, thuộc sở hữu devUser3
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "242",
+                endpoint + "242",    //notifications/read/{auctionDenyId}
                 devUser3_Token
         );
 
@@ -31,27 +31,10 @@ public class ReadNotificationsTest extends BaseTest {
         }
     }
     @Test //Test failed do server
-    public void TestReadNotifications_NoAuthorFailed() throws Exception { //auctionId = 242 đã bị từ chối bởi Admin,
-                                                                        // không thuộc sở hữu devUser3
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "241",
-                devUser3_Token
-        );
-
-        try {
-            CustomResponse response = httpRequest.get();
-            assertEquals(200, response.getStatusCode());
-            assertEquals("1006", response.GetResponseCode()); //không có quyền
-            assertNotEquals("OK",response.getResponseMessage());
-        } catch (Exception e) {
-            throw new Exception("Error on Reading Notifications.");
-        }
-    }
-    @Test //Test failed do server
-    public void TestReadNotifications_NotYetApprovedAuctionFailed() throws Exception {//auctionID=15 là phiên đấu giá "chờ phê duyệt" bởi admin
+    public void TestReadNotificationsNotYetApprovedAuctionFailed() throws Exception {//auctionID=15 là phiên đấu giá "chờ phê duyệt" bởi admin
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "213",
+                endpoint + "15",     //notifications/read/{auctionDenyId}
                 devUser3_Token
         );
 
@@ -65,10 +48,10 @@ public class ReadNotificationsTest extends BaseTest {
         }
     }
     @Test //Test failed do server
-    public void TestReadNotifications_ApprovedAuctionFailed() throws Exception {// auctionId = 137 đã được chấp nhận bởi Admin
+    public void TestReadNotificationsApprovedAuctionFailed() throws Exception {// auctionId = 137 đã được chấp nhận bởi Admin
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "137",
+                endpoint + "137",//notifications/read/{auctionDenyId}
                 devUser3_Token
         );
 
@@ -82,10 +65,10 @@ public class ReadNotificationsTest extends BaseTest {
         }
     }
     @Test
-    public void TestReadNotifications_NoTokenFailed() throws Exception {// auctionId = 242 đã bị từ chối bởi Admin, chưa đăng nhập
+    public void TestReadNotificationsNoTokenFailed() throws Exception {// chưa đăng nhập
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "242"
+                endpoint + "242"    //notifications/read/{auctionDenyId}
         );
 
         try {

@@ -6,8 +6,7 @@ import Utils.HTTPRequest;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ReadNewsTest extends BaseTest {
     private static String endpoint(String newid) {
@@ -51,6 +50,7 @@ public class ReadNewsTest extends BaseTest {
             assertEquals(200,response.getStatusCode());
             assertNotNull(response.getResponseMessage());
             assertEquals("1004", response.GetResponseCode());
+            assertNull(response.getResponseData());
         }catch(Exception ex){
             throw new Exception("Error on Reading News");
 
@@ -106,7 +106,8 @@ public class ReadNewsTest extends BaseTest {
 
             assertEquals(200,response.getStatusCode());
             assertNotNull(response.getResponseMessage());
-            assertEquals("1004", response.GetResponseCode());  //lỗi chưa đăng nhập
+            assertEquals("1004", response.GetResponseCode());//lỗi chưa đăng nhập
+            assertNull(response.getResponseData());
         }catch(Exception ex){
             throw new Exception("Error on Reading News");
 

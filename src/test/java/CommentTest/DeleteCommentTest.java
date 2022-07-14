@@ -14,7 +14,7 @@ public class DeleteCommentTest extends BaseTest {
     private static String endpoint = "/comments/delete/";
 
     @Test
-    public void TestDeleteCmt_Successfully() throws Exception {
+    public void TestDeleteCmtSuccessfully() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "17",
@@ -31,7 +31,8 @@ public class DeleteCommentTest extends BaseTest {
             throw new Exception("Error on Deleting Comment Test.");
         }
     }
-    public void TestDeleteCmt_NoTokenFailed() throws Exception {//1004: chưa đăng nhập
+    @Test
+    public void TestDeleteCmtNoTokenFailed() throws Exception {//1004: chưa đăng nhập
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "13"
@@ -42,12 +43,13 @@ public class DeleteCommentTest extends BaseTest {
             assertEquals(200, response.getStatusCode());
             assertNotNull(response.getResponseMessage());
             assertEquals("1004", response.GetResponseCode());
+            assertNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on Deleting Comment Test.");
         }
     }
     @Test
-    public void TestDeleteCmt_NoAuthorFailed() throws Exception {//1006: không có quyền
+    public void TestDeleteCmtNoAuthorFailed() throws Exception {//1006: không có quyền
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "13",
@@ -57,16 +59,16 @@ public class DeleteCommentTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.post();
             assertEquals(200, response.getStatusCode());
-            assertEquals("OK",response.getResponseMessage());
-            assertEquals("1000", response.GetResponseCode());
-            assertNotNull(response.getResponseData());
+            assertNotNull(response.getResponseMessage());
+            assertEquals("1006", response.GetResponseCode());
+            assertNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on Deleting Comment Test.");
         }
     }
     @Test
-    public void TestDeleteCmt_NotExistedFailed() throws Exception {//CommentID đã bị xóa và ko còn tồn tại trong database
-        HTTPRequest httpRequest = new HTTPRequest(                  // CommentID =17 sẽ bị xóa sau khi chạy TestDeleteCmt_Successfully
+    public void TestDeleteCmtNotExistedFailed() throws Exception {//CommentID đã bị xóa và ko còn tồn tại trong database
+        HTTPRequest httpRequest = new HTTPRequest(                // CommentID =17 sẽ bị xóa sau khi chạy TestDeleteCmt_Successfully
                 endpoint + "17",
                 devUser3_Token
         );
@@ -74,8 +76,6 @@ public class DeleteCommentTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.post();
             assertEquals(404, response.getStatusCode());
-            assertNotEquals("OK",response.getResponseMessage());
-            assertNotEquals("1000", response.GetResponseCode());
         } catch (Exception e) {
             throw new Exception("Error on Deleting Comment Test.");
         }

@@ -6,8 +6,7 @@ import Utils.HTTPRequest;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GetNewsTest extends BaseTest {
     private static String endpoint(
@@ -57,6 +56,7 @@ public class GetNewsTest extends BaseTest {
             assertEquals(200,response.getStatusCode());
             assertNotNull(response.getResponseMessage());
             assertEquals("1004", response.GetResponseCode());
+            assertNull(response.getResponseData());
         }catch(Exception ex){
             throw new Exception("Error on getting News");
 
@@ -132,9 +132,7 @@ public class GetNewsTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.get();
 
-            assertEquals(200,response.getStatusCode());
-            assertNotNull(response.getResponseMessage());
-            assertEquals("1004", response.GetResponseCode());
+            assertEquals(500,response.getStatusCode());
         } catch (Exception ex) {
             throw new Exception("Error on getting News");
 
@@ -153,9 +151,7 @@ public class GetNewsTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.get();
 
-            assertEquals(200,response.getStatusCode());
-            assertNotNull(response.getResponseMessage());
-            assertEquals("1004", response.GetResponseCode());
+            assertEquals(500,response.getStatusCode());
         } catch (Exception ex) {
             throw new Exception("Error on getting News");
 
@@ -173,9 +169,7 @@ public class GetNewsTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.get();
 
-            assertEquals(200,response.getStatusCode());
-            assertNotNull(response.getResponseMessage());
-            assertEquals("1004", response.GetResponseCode());
+            assertEquals(500,response.getStatusCode());
         } catch (Exception ex) {
             throw new Exception("Error on getting News");
 

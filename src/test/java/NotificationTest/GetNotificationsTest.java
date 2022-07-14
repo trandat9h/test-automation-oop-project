@@ -24,8 +24,6 @@ public class GetNotificationsTest extends BaseTest {
         return "/notifications?index=" + index +"&count="+count + "&is_not_read=" + is_not_read;
     }
 
-
-
     @Test
     public void TestGetNotificationsSuccessfully () throws Exception{
         String index = "1";
@@ -49,7 +47,6 @@ public class GetNotificationsTest extends BaseTest {
 
         }
     }
-
     @Test
     public void TestGetNotificationsNoTokenFailed () throws Exception{
 

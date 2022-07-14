@@ -19,8 +19,8 @@ public class AcceptMaxBidTest extends BaseTest {
 
     // Các phiên đấu giá do devUser2@gmail.com tạo có auctionID:
         // 134: từ 9/7 - 10/7 đến hôm 17 trạng thái phiên đấu giá "đã kết thúc" đã có người trả giá (10/7 chạy thử test)(thành công) -- 1000: OK, vẫn dùng để test tiếp 1010: đã bán
-        // 166: giống 134 để chạy test vào hôm bảo vệ 17/07
-        // 136: từ 9/7 - 14/7 đến hôm 17 trạng thái phiên đấu giá "đã kết thúc" nhưng chưa có ai trả giá (15/7 chạy thử test) --1011: chưa có trả giá nào
+        // 136(giống 134): từ 9/7 - 14/7 để chạy test vào hôm bảo vệ 17/07
+        // 166: từ 9/7 - 14/7 đến hôm 17 trạng thái phiên đấu giá "đã kết thúc" nhưng chưa có ai trả giá (15/7 chạy thử test) --1011: chưa có trả giá nào
         // 137: từ 9/7 - 19/7 đến hôm 17 trạng thái phiên đấu giá "đang diễn ra" (chạy dc rồi) --1009: phiên đấu giá chưa kết thúc
         // 138: từ 19/7 - 25/7 đến hôm 17 trạng thái phiên đấu giá "chưa diễn ra" (chạy dc rồi) --1009: phiên đấu giá chưa kết thúc
     // Sử dụng phiên đấu giá có autionID = 8 không do devUser2@gmail.com tạo để test lỗi-- 1006: Không có quyền
@@ -43,7 +43,29 @@ public class AcceptMaxBidTest extends BaseTest {
         return requestBody;
     }
     @Test
-    public void TestAcceptMaxBid_NoToken() throws Exception { //chưa đăng nhập
+    public void TestAcceptMaxBidSuccessfully() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá 134: từ 9/7 - 10/7 đến hôm 17 trạng thái
+        JSONObject requestBody = buildAcceptMaxBidRequestBody(     //phiên đấu giá "đã kết thúc" đã có người trả giá (11/7 chạy thử test) -- 1000: OK
+                "I accepted"
+        );
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint + "134", // bảo vệ thay thành 136
+                requestBody,
+                devUser2_Token
+        );
+
+        try {
+            CustomResponse response = httpRequest.post();
+            assertEquals(200, response.getStatusCode());
+            assertEquals("Ok",response.getResponseMessage());
+            assertEquals("1000", response.GetResponseCode());
+            assertNotNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on Accepting Max Bid request.");
+        }
+    }
+    @Test
+    public void TestAcceptMaxBidNoToken() throws Exception { //chưa đăng nhập
         JSONObject requestBody = buildAcceptMaxBidRequestBody(
                 "I accepted"
         );
@@ -63,8 +85,9 @@ public class AcceptMaxBidTest extends BaseTest {
             throw new Exception("Error on Accepting Max Bid request.");
         }
     }
+
     @Test
-    public void TestAcceptMaxBid_NoAuthor() throws Exception { //Sử dụng phiên đấu giá có autionID = 8 không do devUser2@gmail.com tạo để test lỗi-- 1006: Không có quyền
+    public void TestAcceptMaxBidNoAuthor() throws Exception { //Sử dụng phiên đấu giá có autionID = 8 không do devUser2@gmail.com tạo để test lỗi-- 1006: Không có quyền
         JSONObject requestBody = buildAcceptMaxBidRequestBody(
                 "I accepted"
         );
@@ -85,29 +108,7 @@ public class AcceptMaxBidTest extends BaseTest {
         }
     }
     @Test
-    public void TestAcceptMaxBid_Successfully() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá 134: từ 9/7 - 10/7 đến hôm 17 trạng thái
-        JSONObject requestBody = buildAcceptMaxBidRequestBody(     //phiên đấu giá "đã kết thúc" đã có người trả giá (11/7 chạy thử test) -- 1000: OK
-                "I accepted"
-        );
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "134",
-                requestBody,
-                devUser2_Token
-        );
-
-        try {
-            CustomResponse response = httpRequest.post();
-            assertEquals(200, response.getStatusCode());
-            assertEquals("Ok",response.getResponseMessage());
-            assertEquals("1000", response.GetResponseCode());
-            assertNotNull(response.getResponseData());
-        } catch (Exception e) {
-            throw new Exception("Error on Accepting Max Bid request.");
-        }
-    }
-    @Test
-    public void TestAcceptMaxBid_SoldOut() throws Exception {        //chấp nhận LẠI giá cao nhất cho phiên đấu giá 134 sau khi có đã chấp nhận rồi
+    public void TestAcceptMaxBidSoldOut() throws Exception { //chấp nhận LẠI giá cao nhất cho phiên đấu giá 134 sau khi đã chấp nhận rồi
         JSONObject requestBody = buildAcceptMaxBidRequestBody(// Chạy sau TestAcceptMaxBid_Successfully --1010: đã bán
                 "I accepted"
         );
@@ -129,13 +130,13 @@ public class AcceptMaxBidTest extends BaseTest {
         }
     }
     @Test
-    public void TestAcceptMaxBid_HaveNoBid() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá chưa có trả giá nào --1011: chưa có trả giá nào
+    public void TestAcceptMaxBidHaveNoBid() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá chưa có trả giá nào --1011: chưa có trả giá nào
         JSONObject requestBody = buildAcceptMaxBidRequestBody(
                 "I accepted"
         );
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "136",
+                endpoint + "166",
                 requestBody,
                 devUser2_Token
         );
@@ -153,7 +154,7 @@ public class AcceptMaxBidTest extends BaseTest {
 
 
     @Test
-    public void TestAcceptMaxBid_OnGoing() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá đang diễn ra --1009: phiên đấu giá chưa kết thúc
+    public void TestAcceptMaxBidOnGoing() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá đang diễn ra --1009: phiên đấu giá chưa kết thúc
         JSONObject requestBody = buildAcceptMaxBidRequestBody(
                 "I accepted"
         );
@@ -175,7 +176,7 @@ public class AcceptMaxBidTest extends BaseTest {
         }
     }
     @Test
-    public void TestAcceptMaxBid_NotYetStart() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá chưa diễn ra nhưng đã được chấp thuân --1009: phiên đấu giá chưa kết thúc
+    public void TestAcceptMaxBidNotYetStart() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá đã được chấp thuân và chưa diễn ra --1009: phiên đấu giá chưa kết thúc
         JSONObject requestBody = buildAcceptMaxBidRequestBody(
                 "I accepted"
         );
@@ -197,30 +198,27 @@ public class AcceptMaxBidTest extends BaseTest {
         }
     }
     @Test
-    public void TestAcceptMaxBid_AnUnapprovedAuction() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá chưa được phê duyệt
+    public void TestAcceptMaxBidAnUnapprovedAuction() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá chưa được phê duyệt
         Setup();
         JSONObject requestBody = buildAcceptMaxBidRequestBody(
                 "I accepted"
         );
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint,
+                endpoint + "141",
                 requestBody,
                 authToken
         );
 
         try {
             CustomResponse response = httpRequest.post();
-            assertEquals(200, response.getStatusCode());
-            assertNotNull(response.getResponseMessage());
-            assertEquals("1009", response.GetResponseCode());
-            assertNull(response.getResponseData());
+            assertEquals(404, response.getStatusCode());
         } catch (Exception e) {
             throw new Exception("Error on Accepting Max Bid request.");
         }
     }
     @Test // Test fail do server
-    public void TestAcceptMaxBid_NoSellingInfo() throws Exception { //requestBody là params bắt buộc tuy nhiên bodyRequest ko có vẫn ko lỗi
+    public void TestAcceptMaxBidNoSellingInfo() throws Exception { //requestBody là bắt buộc tuy nhiên bodyRequest ko có vẫn ko lỗi
         Setup();
 
         HTTPRequest httpRequest = new HTTPRequest(
