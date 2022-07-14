@@ -8,8 +8,7 @@ import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GetBidsTest extends BaseTest {
     private static String auctionId = AuctionHelper.getAuctionId();
@@ -34,6 +33,26 @@ public class GetBidsTest extends BaseTest {
                 endpoint,
                 requestBody,
                 authToken
+        );
+
+        try {
+            CustomResponse response = httpRequest.get();
+
+            assertEquals(200, response.getStatusCode());
+            assertEquals("OK", response.getResponseMessage());
+            assertNotNull(response.getResponseData());
+        } catch (Exception e) {
+            throw new Exception("Error on get bids auctions");
+        }
+    }
+
+    @Test
+    public void TestGetListBidsWithNoAuthHeader() throws Exception{
+        JSONObject requestBody = buildGetBidsRequestBody("0", "2");
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint,
+                requestBody
         );
 
         try {
