@@ -273,7 +273,7 @@ public class CreateItemTest extends BaseTest {
 
             assertEquals(200, second_response.getStatusCode());
             assertNotNull(second_response.getResponseMessage());
-            assertEquals("1001", second_response.GetResponseCode());
+            assertEquals("9995", second_response.GetResponseCode());
             assertNull(second_response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on creating item request.");

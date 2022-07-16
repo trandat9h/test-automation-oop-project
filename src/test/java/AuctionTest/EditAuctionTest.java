@@ -43,93 +43,15 @@ public class EditAuctionTest extends BaseTest {
         return requestBody;
     }
 
+
     @Test
-    public void TestEditStartDateSuccessfully()  throws Exception {
+    public void TestEditSuccessfully()  throws Exception {
         // category_id : 2 is a hardcode id, this might not work if we change the url
         JSONObject requestBody = buildEditAuctionRequestBody(
                 2,
-                null,
-                null,
-                null
-        );
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint,
-                requestBody,
-                authToken
-        );
-        try {
-            CustomResponse response = httpRequest.post();
-
-            assertEquals(200, response.getStatusCode());
-            assertEquals("OK", response.getResponseMessage());
-            assertEquals("1000", response.GetResponseCode());
-            assertNotNull(response.getResponseData());
-        } catch (Exception e) {
-            throw new Exception("Error on creating auction request.");
-        }
-    }
-
-    @Test
-    public void TestEditEndDateSuccessfully()  throws Exception {
-        JSONObject requestBody = buildEditAuctionRequestBody(
-                null,
                 DateHelper.generateOneDayAfterCurrentDate(),
-                null,
-                null
-        );
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint,
-                requestBody,
-                authToken
-        );
-        try {
-            CustomResponse response = httpRequest.post();
-
-            assertEquals(200, response.getStatusCode());
-            assertEquals("OK", response.getResponseMessage());
-            assertEquals("1000", response.GetResponseCode());
-            assertNotNull(response.getResponseData());
-        } catch (Exception e) {
-            throw new Exception("Error on creating auction request.");
-        }
-    }
-
-    @Test
-    public void TestEditTitleSuccessfully()  throws Exception {
-        JSONObject requestBody = buildEditAuctionRequestBody(
-                null,
-                null,
                 DateHelper.generateFutureDate(),
-                null
-        );
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint,
-                requestBody,
-                authToken
-        );
-        try {
-            CustomResponse response = httpRequest.post();
-
-            assertEquals(200, response.getStatusCode());
-            assertEquals("OK", response.getResponseMessage());
-            assertEquals("1000", response.GetResponseCode());
-            assertNotNull(response.getResponseData());
-        } catch (Exception e) {
-            throw new Exception("Error on creating auction request.");
-        }
-    }
-
-    @Test
-    public void TestEditCategorySuccessfully()  throws Exception {
-        // category_id : 2 is a hardcode id, this might not work if we change the url
-        JSONObject requestBody = buildEditAuctionRequestBody(
-                2,
-                null,
-                null,
-                null
+                AuctionHelper.generateRandomAuctionTitle()
         );
 
         HTTPRequest httpRequest = new HTTPRequest(
