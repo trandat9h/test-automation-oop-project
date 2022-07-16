@@ -4,8 +4,10 @@ import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import Utils.HelperMethods.AuctionHelper;
+import Utils.HelperMethods.AuthHelper;
 import Utils.HelperMethods.DateHelper;
 import org.json.simple.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -40,6 +42,13 @@ public class CreateAuctionTest extends BaseTest {
 
         return requestBody;
     }
+
+    @BeforeEach
+    public void Setup() {
+        createdAccount = AuthHelper.createNewExistedRandomUser();
+        authToken = AuthHelper.getAuthToken(createdAccount);
+    }
+
 
     @Test
     public void TestCreateAuctionSuccessfully() throws Exception {

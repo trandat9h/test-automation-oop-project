@@ -1,6 +1,9 @@
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -18,8 +21,16 @@ public class TestRunner {
     private static final ArrayList<String> packages = new ArrayList<>() {{
         add("AuctionTest");
         add("AuthenticationTest");
+        add("BidTest");
+        add("BrandTest");
+        add("CategoryTest");
+        add("ChatTest");
+        add("CommentTest");
+        add("ContactTest");
+        add("LikeTest");
+        add("NewsTest");
+        add("NotificationTest");
         add("SliderTest");
-        add("SearchTest");
         // add all test packages here
     }};
     private final ArrayList<DiscoverySelector> selectors = packageToSelector();
@@ -72,40 +83,39 @@ public class TestRunner {
 
         System.out.println("[User] I want to test " + packageName + ".\n");
 
-        // this warning can be skipped as above code makes sure this list never null
-        APIs = new ArrayList<TestIdentifier>(runner.discoverAPIs(packageName));
-
-        System.out.println("[System] Choose an API you want to test. Type 'all' to test all APIs. \n");
-        for(int index = 0; index < APIs.size(); index++) {
-            System.out.println(index + ": " + APIs.get(index).getDisplayName() + "\n");
-        }
-
-        while (true) {
-            String userInput = scanner.nextLine();
-            if (userInput.equals("all")) {
-                API = userInput;
-                break;
-            }
-            else {
-                try {
-                    int choice = Integer.parseInt(userInput);
-                    if (choice < 0 || choice >= APIs.size())
-                        throw new Exception();
-                    API = APIs.get(choice).getDisplayName();
-                    break;
-                } catch (Exception e) {
-                    System.out.println("[Error] Wrong choice. Choose again! \n");
-                }
-            }
-        }
-
-        System.out.println("[User] I want to test " + API + ".\n");
-
-        if (API.equals("all")) {
+        if (packageName.equals("all")) {
             System.out.println("[System] Running... \n");
             runner.runAll();
         }
         else {
+            // this warning can be skipped as above code makes sure this list never null
+            APIs = new ArrayList<TestIdentifier>(runner.discoverAPIs(packageName));
+
+            System.out.println("[System] Choose an API you want to test. Type 'all' to test all APIs. \n");
+            for (int index = 0; index < APIs.size(); index++) {
+                System.out.println(index + ": " + APIs.get(index).getDisplayName() + "\n");
+            }
+
+            while (true) {
+                String userInput = scanner.nextLine();
+                if (userInput.equals("all")) {
+                    API = userInput;
+                    break;
+                } else {
+                    try {
+                        int choice = Integer.parseInt(userInput);
+                        if (choice < 0 || choice >= APIs.size())
+                            throw new Exception();
+                        API = APIs.get(choice).getDisplayName();
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("[Error] Wrong choice. Choose again! \n");
+                    }
+                }
+            }
+
+            System.out.println("[User] I want to test " + API + ".\n");
+
             while (true) {
                 System.out.println("[System] Choose an execute options: press 1 or 2 to choose\n");
                 System.out.println("1. Execute all tests inside chosen API \n");
@@ -116,8 +126,7 @@ public class TestRunner {
                     System.out.println("[System] Running... \n");
                     runner.runTestClass(API);
                     break;
-                }
-                else if (userInput.equals("2")) {
+                } else if (userInput.equals("2")) {
                     Set<TestIdentifier> _discoveredTests = runner.discoverTests(API);
                     assert _discoveredTests != null;
                     List<TestIdentifier> discoveredTests = new ArrayList<>(_discoveredTests);
@@ -219,7 +228,7 @@ public class TestRunner {
     }
 
     private void runAll()   {
-        request.getDiscoveryListener();
+        // request.getDiscoveryListener();
         testExecute();
     }
 
@@ -243,10 +252,33 @@ public class TestRunner {
     }
 
     private static void failedTestPrint(List<Failure> failedTests) {
-        for (Failure test: failedTests) {
-            TestIdentifier testIdentifier = test.getTestIdentifier();
-            System.out.println("Test: " + testIdentifier.getDisplayName() + "\n");
-            System.out.println("Error: " + test.getException().getMessage() + "\n");
+        try {
+            File myObj = new File("error_report.txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        try {
+            FileWriter myWriter = new FileWriter("error_report.txt");
+
+            for (Failure test: failedTests) {
+                TestIdentifier testIdentifier = test.getTestIdentifier();
+                myWriter.write("================= Fail Test ==================== \n");
+                myWriter.write("Test: " + testIdentifier.getDisplayName() + "\n");
+                myWriter.write("Error: " + test.getException().getMessage() + "\n");
+            }
+
+            myWriter.close();
+            System.out.println("Successfully wrote failed tests to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
 }

@@ -3,7 +3,9 @@ package AuthenticationTest;
 import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
+import Utils.HelperMethods.AuthHelper;
 import org.json.simple.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static Utils.HelperMethods.AuthHelper.generateRandomLongString;
@@ -26,6 +28,13 @@ public class ChangePasswordTest extends BaseTest {
 
         return requestBody;
     }
+
+    @BeforeEach
+    public void Setup() {
+        createdAccount = AuthHelper.createNewExistedRandomUser();
+        authToken = AuthHelper.getAuthToken(createdAccount);
+    }
+
 
     @Test
     public void TestChangePasswordSuccessfully() throws Exception{

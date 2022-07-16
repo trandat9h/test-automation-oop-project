@@ -9,7 +9,10 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import java.util.stream.Stream;
 
 import Base.BaseTest;
+import Utils.HelperMethods.AuctionHelper;
+import Utils.HelperMethods.AuthHelper;
 import org.json.simple.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -18,6 +21,12 @@ import Utils.HTTPRequest;
 
 public class EditAccountTest extends BaseTest {
     private static final String endpoint = "/edit";
+
+    @BeforeEach
+    public void Setup() {
+        createdAccount = AuthHelper.createNewExistedRandomUser();
+        authToken = AuthHelper.getAuthToken(createdAccount);
+    }
 
     private static JSONObject buildEditAccountRequestBody(
             String email,

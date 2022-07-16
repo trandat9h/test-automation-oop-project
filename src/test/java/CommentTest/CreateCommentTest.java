@@ -5,6 +5,7 @@ import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import Utils.HelperMethods.AuctionHelper;
 
+import Utils.HelperMethods.AuthHelper;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,8 @@ public class CreateCommentTest extends BaseTest {
     public void Setup() {
         auctionId = AuctionHelper.getAuctionId(createdAccount);
         endpoint = "/comments/create/" + auctionId;
+        createdAccount = AuthHelper.createNewExistedRandomUser();
+        authToken = AuthHelper.getAuthToken(createdAccount);
     }
 
     private static JSONObject buildCreateCommentRequestBody(

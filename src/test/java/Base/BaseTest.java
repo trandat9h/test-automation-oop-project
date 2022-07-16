@@ -4,8 +4,8 @@ import Utils.HelperMethods.AuthHelper;
 import org.json.simple.JSONObject;
 
 public class BaseTest {
-    protected static final JSONObject createdAccount = AuthHelper.createNewExistedRandomUser();
-    protected static final String authToken = AuthHelper.getAuthToken(createdAccount);
+    protected static  JSONObject createdAccount = AuthHelper.createNewExistedRandomUser();
+    protected static String authToken = AuthHelper.getAuthToken(createdAccount);
     private static JSONObject Account (
             String email,
             String password){
@@ -19,6 +19,4 @@ public class BaseTest {
     }
     protected static final String devUser2_Token = AuthHelper.getAuthToken(Account("devUser2@gmail.com","123456"));
     protected static final String devUser3_Token = AuthHelper.getAuthToken(Account("devUser3@gmail.com","123456"));
-
-
 }

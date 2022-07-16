@@ -3,6 +3,8 @@ package NotificationTest;
 import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
+import Utils.HelperMethods.AuthHelper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +22,12 @@ public class GetNotificationsTest extends BaseTest {
         if(count == null|| count.equals("")) return "/notifications?index=" + index + "&is_not_read="+is_not_read;
         if(is_not_read == null || is_not_read.equals("")) return "/notifications?index=" + index +"&count="+count;
         return "/notifications?index=" + index +"&count="+count + "&is_not_read=" + is_not_read;
+    }
+
+    @BeforeEach
+    public void Setup() {
+        createdAccount = AuthHelper.createNewExistedRandomUser();
+        authToken = AuthHelper.getAuthToken(createdAccount);
     }
 
     @Test

@@ -4,9 +4,9 @@ import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import Utils.HelperMethods.AuctionHelper;
+import Utils.HelperMethods.AuthHelper;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +19,8 @@ public class CreateBidTest extends BaseTest {
         public void Setup() {
             auctionId = AuctionHelper.getAuctionId(createdAccount);
             endpoint = "/bids/create/" + auctionId;
+            createdAccount = AuthHelper.createNewExistedRandomUser();
+            authToken = AuthHelper.getAuthToken(createdAccount);
         }
 
         private static JSONObject buildCreateBidRequestBody(

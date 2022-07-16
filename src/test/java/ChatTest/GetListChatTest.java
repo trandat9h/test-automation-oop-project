@@ -3,13 +3,21 @@ package ChatTest;
 import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
+import Utils.HelperMethods.AuthHelper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GetListChatTest extends BaseTest {
-
     private static final String endpoint = "/chat";
+
+    @BeforeEach
+    public void Setup() {
+        createdAccount = AuthHelper.createNewExistedRandomUser();
+        authToken = AuthHelper.getAuthToken(createdAccount);
+    }
+
     @Test
     void GetListChatSuccessfully() throws Exception{
         HTTPRequest httpRequest = new HTTPRequest(
