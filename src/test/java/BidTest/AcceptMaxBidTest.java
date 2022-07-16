@@ -4,7 +4,6 @@ import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import Utils.HelperMethods.AuctionHelper;
-import Utils.HelperMethods.AuthHelper;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +26,7 @@ public class AcceptMaxBidTest extends BaseTest {
     // Không sử dụng Token  --1004: chưa đăng nhập
     private static String auctionId;
     private static String endpoint = "/accept/";
+
     public void Setup() {
         auctionId = AuctionHelper.getAuctionId(createdAccount);
         endpoint = "/accept/" + auctionId;
@@ -197,38 +197,21 @@ public class AcceptMaxBidTest extends BaseTest {
             throw new Exception("Error on Accepting Max Bid request.");
         }
     }
-    @Test
-    public void TestAcceptMaxBidAnUnapprovedAuction() throws Exception { //chấp nhận giá cao nhất cho phiên đấu giá chưa được phê duyệt
-        Setup();
-        JSONObject requestBody = buildAcceptMaxBidRequestBody(
-                "I accepted"
-        );
 
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "141",
-                requestBody,
-                authToken
-        );
-
-        try {
-            CustomResponse response = httpRequest.post();
-            assertEquals(404, response.getStatusCode());
-        } catch (Exception e) {
-            throw new Exception("Error on Accepting Max Bid request.");
-        }
-    }
     @Test // Test fail do server
     public void TestAcceptMaxBidNoSellingInfo() throws Exception { //requestBody là bắt buộc tuy nhiên bodyRequest ko có vẫn ko lỗi
-        Setup();
-
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint,
-                authToken
+                endpoint + "134",
+                devUser2_Token
         );
 
         try {
             CustomResponse response = httpRequest.post();
-            assertEquals(500, response.getStatusCode());
+
+            assertEquals(200, response.getStatusCode());
+            assertEquals("1001", response.GetResponseCode());
+            assertNotEquals("OK", response.getResponseMessage());
+            assertNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on Accepting Max Bid request.");
         }

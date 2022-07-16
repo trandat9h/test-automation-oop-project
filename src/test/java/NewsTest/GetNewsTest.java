@@ -3,7 +3,6 @@ package NewsTest;
 import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +39,7 @@ public class GetNewsTest extends BaseTest {
 
         }
     }
-    @Test  //Failed Test do Server (Token notnull)
+    @Test  //Failed Test do Server (Token notnull), server nhả ra 1000 ok
     public void TestGetNewsNoTokenFailed () throws Exception{
 
         String index = "1";
@@ -62,7 +61,7 @@ public class GetNewsTest extends BaseTest {
 
         }
     }
-    @Test
+    @Test// fail do server, server nhả ra 500
     public void TestGetNewsNoIndexFailed () throws Exception {
         String index = null;
         String count = "3";
@@ -75,16 +74,19 @@ public class GetNewsTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.get();
 
-            assertEquals(500, response.getStatusCode());
+            assertEquals(200, response.getStatusCode());
+            assertNotEquals("1000", response.GetResponseCode());
+            assertNotEquals("OK", response.getResponseMessage());
+            assertNull(response.getResponseData());
         } catch (Exception ex) {
             throw new Exception("Error on getting News");
 
         }
     }
 
-    @Test
+    @Test // fail do server, server nhả ra 500
     public void TestGetNewsNoCountFailed () throws Exception {
-        String index = "3";
+        String index = "1";
         String count = null;
 
         HTTPRequest httpRequest = new HTTPRequest(
@@ -95,85 +97,13 @@ public class GetNewsTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.get();
 
-            assertEquals(500, response.getStatusCode());
+            assertEquals(200, response.getStatusCode());
+            assertNotEquals("1000", response.GetResponseCode());
+            assertNotEquals("OK", response.getResponseMessage());
+            assertNull(response.getResponseData());
         } catch (Exception ex) {
             throw new Exception("Error on getting News");
 
         }
     }
-    @Test
-    public void TestGetNewsNoIndexNoCountFailed () throws Exception {
-        String index = null;
-        String count = null;
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint(index, count) ,
-                authToken
-        );
-
-        try {
-            CustomResponse response = httpRequest.get();
-
-            assertEquals(500, response.getStatusCode());
-        } catch (Exception ex) {
-            throw new Exception("Error on getting News");
-
-        }
-    }
-    @Test //Failed Test do Server (token and index NOTNULL)
-    public void TestGetNewsNoIndexNoTokenFailed () throws Exception {
-        String index = null;
-        String count = "3";
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint(index, count)
-        );
-
-        try {
-            CustomResponse response = httpRequest.get();
-
-            assertEquals(500,response.getStatusCode());
-        } catch (Exception ex) {
-            throw new Exception("Error on getting News");
-
-        }
-    }
-
-    @Test //Failed Test do Server (token and count NOTNULL)
-    public void TestGetNewsNoCountNoTokenFailed () throws Exception {
-        String index = "3";
-        String count = null;
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint(index, count)
-        );
-
-        try {
-            CustomResponse response = httpRequest.get();
-
-            assertNotEquals(500, response.getStatusCode());
-        } catch (Exception ex) {
-            throw new Exception("Error on getting News");
-
-        }
-    }
-    @Test   //Failed Test do Server(token, index, count NOTNULL)
-    public void TestGetNewsNoIndexNoCountNoTokenFailed () throws Exception {
-        String index = null;
-        String count = null;
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint(index, count)
-        );
-
-        try {
-            CustomResponse response = httpRequest.get();
-
-            assertNotEquals(500, response.getStatusCode());
-        } catch (Exception ex) {
-            throw new Exception("Error on getting News");
-
-        }
-    }
-
 }

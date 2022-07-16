@@ -22,7 +22,7 @@ public class GetLikesTest extends BaseTest {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "1" + params("1","10"), //    /likes/{statusId}
-                devUser3_Token
+                authToken
         );
 
         try {
@@ -45,77 +45,45 @@ public class GetLikesTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.get();
             assertEquals(200, response.getStatusCode());
-            assertNotNull(response.getResponseMessage());
             assertEquals("1004", response.GetResponseCode());
+            assertNotNull(response.getResponseMessage());
         } catch (Exception e) {
             throw new Exception("Error on Getting List Like.");
         }
     }
-    @Test //fail do server
+    @Test //fail do server nhả ra 500
     public void TestGetListLikeNoCount() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "1"+ params("1",null),   //    /likes/{statusId}
-                devUser3_Token
+                authToken
         );
 
         try {
             CustomResponse response = httpRequest.get();
-            assertNotEquals(500, response.getStatusCode());
+            assertEquals(200, response.getStatusCode());
+            assertNotEquals("1000", response.GetResponseCode());
+            assertNotEquals("OK", response.getResponseMessage());
         } catch (Exception e) {
             throw new Exception("Error on Getting List Like.");
         }
     }
-    @Test //fail do server
+    @Test //fail do server nhả ra 500
     public void TestGetListLikeNoIndexFailed() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "1"+ params(null,"10"), //    /likes/{statusId}
-                devUser3_Token
+                authToken
         );
 
         try {
             CustomResponse response = httpRequest.get();
-            assertNotEquals(500, response.getStatusCode());
-//            assertNotEquals();
+            assertEquals(200, response.getStatusCode());
+            assertNotEquals("1000", response.GetResponseCode());
+            assertNotEquals("OK", response.getResponseMessage());
         } catch (Exception e) {
             throw new Exception("Error on Getting List Like.");
         }
     }
-//    @Test //
-//    public void TestGetListLikeNoCountNoIndexFailed() throws Exception {
-//
-//        HTTPRequest httpRequest = new HTTPRequest(
-//                endpoint + "1" + params(null,null), //    /likes/{statusId}
-//                devUser3_Token
-//        );
-//
-//        try {
-//            CustomResponse response = httpRequest.get();
-//            assertNotEquals(500, response.getStatusCode());
-//            assertNotEquals("1000", response.GetResponseCode());
-//            assertNotEquals();
-//
-//        } catch (Exception e) {
-//            throw new Exception("Error on Getting List Like.");
-//        }
-//    }
-//    @Test
-//    public void TestGetListLikeNocountNoIndexNoTokenFailed() throws Exception {
-//
-//        HTTPRequest httpRequest = new HTTPRequest(
-//                endpoint + "1"+ params(null,null) //    /likes/{statusId}
-//        );
-//
-//        try {
-//            CustomResponse response = httpRequest.get();
-//            assertEquals(200, response.getStatusCode());
-//            assertNotNull(response.getResponseMessage());
-//            assertEquals("1004", response.GetResponseCode());
-//            assertNull(response.getResponseData());
-//        } catch (Exception e) {
-//            throw new Exception("Error on Getting List Like.");
-//        }
-//    }
 
 }

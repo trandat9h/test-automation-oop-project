@@ -133,7 +133,7 @@ public class GetNotificationsTest extends BaseTest {
             CustomResponse response = httpRequest.get();
 
             assertNotEquals("OK",response.getResponseMessage());
-            assertEquals("1001", response.GetResponseCode());
+            assertNotEquals("1000", response.GetResponseCode());
         }catch(Exception ex){
             throw new Exception("Error on getting Notifications");
 
