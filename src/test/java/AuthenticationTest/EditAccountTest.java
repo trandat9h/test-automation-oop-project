@@ -22,7 +22,6 @@ public class EditAccountTest extends BaseTest {
 
     private static JSONObject buildEditAccountRequestBody(
             String email,
-            String re_pass,
             String address,
             String name,
             String phone,
@@ -31,8 +30,6 @@ public class EditAccountTest extends BaseTest {
 
         if (email != null)
             requestBody.put("email", email);
-        if (re_pass != null)
-            requestBody.put("re_pass", re_pass);
         if (address != null)
             requestBody.put("address", address);
         if (name != null)
@@ -76,7 +73,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailNoName() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 "tra8@gmail.com",
-                "Tra",
                 "address12",
                 null,
                 "0940",
@@ -103,7 +99,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailLongName() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 "tra8@gmail.com",
-                "Tra",
                 "address12",
                 generateRandomLongString(0),
                 "0940",
@@ -130,7 +125,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailNoEmail() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 null,
-                "Tra",
                 "address12",
                 "tt",
                 "0940",
@@ -157,7 +151,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailWrongTypeEmail() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 "not_an_email",
-                "Tra",
                 "address12",
                 "tt",
                 "0940",
@@ -185,7 +178,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailTooLongEmail() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 generateRandomLongString(1),
-                "Tra",
                 "address12",
                 "tt",
                 "0940",
@@ -213,7 +205,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailSameEmail() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 "tra8@gmail.com",
-                "Tra",
                 "address12",
                 "tt",
                 "0940",
@@ -241,7 +232,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailNoPhone() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 generateRandomEmail(),
-                "Tra",
                 "address12",
                 "tt",
                 null,
@@ -269,7 +259,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailTooLongPhone() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 generateRandomEmail(),
-                "Tra",
                 "address12",
                 "tt",
                 generateRandomLongString(0),
@@ -297,7 +286,6 @@ public class EditAccountTest extends BaseTest {
     public void TestEditAccountFailTooLongAddress() throws Exception{
         JSONObject requestBody = buildEditAccountRequestBody(
                 generateRandomEmail(),
-                "Tra",
                 generateRandomLongString(0),
                 "tt",
                 "0090",

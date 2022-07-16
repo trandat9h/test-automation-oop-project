@@ -145,7 +145,7 @@ public class CreateBidTest extends BaseTest {
         }
     }
 
-    @Disabled("All current auctions haven't ended yet")
+
     @Test
     public void TestCreateFailAuctionEnd()  throws Exception {
         JSONObject requestBody = buildCreateBidRequestBody(
@@ -163,8 +163,8 @@ public class CreateBidTest extends BaseTest {
 
             assertEquals(200, response.getStatusCode());
             assertNotNull( response.getResponseMessage());
-            assertEquals("1001", response.GetResponseCode());
-            assertNotNull(response.getResponseData());
+            assertEquals("1008", response.GetResponseCode());
+            assertNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on creating bids request.");
         }
