@@ -14,7 +14,7 @@ public class LogoutTest extends BaseTest {
 
     @Test
     void logoutSuccessfully() throws Exception{
-        HTTPRequest httpRequest = new HTTPRequest( //viet lai ham nay cho logout
+        HTTPRequest httpRequest = new HTTPRequest(
                 endpoint,
                 authToken
         );

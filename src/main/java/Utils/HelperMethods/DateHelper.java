@@ -49,8 +49,14 @@ public class DateHelper {
         currentTimeInMillis = generateCurrentDateInMillis();
     }
 
+    public static Date generateNearFutureDate1() {
+        updateCurrentDateInMillis();
+        return new Date(currentTimeInMillis + (long) Math.pow(10, 2));
+    }
 
-
-
+    public static Date generateNearFutureDate2() {
+        updateCurrentDateInMillis();
+        return new Date(currentTimeInMillis + (long) Math.pow(10, 3));
+    }
 }
 

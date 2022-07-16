@@ -72,7 +72,7 @@ public class LoginTest extends BaseTest {
         CustomResponse response = httpRequest.post();
 
             assertEquals(200, response.getStatusCode());
-            assertEquals("email: 7000 &password: ", response.getResponseMessage());
+            assertNotNull( response.getResponseMessage());
             assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
         } catch (Exception e) {
@@ -99,7 +99,7 @@ public class LoginTest extends BaseTest {
             CustomResponse response = httpRequest.post();
 
             assertEquals(200, response.getStatusCode());
-            assertEquals("email:  &password: 7000", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
             assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
         } catch (Exception e) {
@@ -126,7 +126,7 @@ public class LoginTest extends BaseTest {
             CustomResponse response = httpRequest.post();
 
             assertEquals(200, response.getStatusCode());
-            assertEquals("email: 7002 &password: ", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
             assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
         } catch (Exception e) {
@@ -153,7 +153,7 @@ public class LoginTest extends BaseTest {
             CustomResponse response = httpRequest.post();
 
             assertEquals(200, response.getStatusCode());
-            assertEquals("email:  &password: 7001", response.getResponseMessage());
+            assertNotNull(response.getResponseMessage());
             assertEquals("1001", response.GetResponseCode());
             assertNull(response.getResponseData());
         } catch (Exception e) {
