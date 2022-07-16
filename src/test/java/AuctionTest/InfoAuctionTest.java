@@ -10,21 +10,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class GetAuctionDetailTest extends BaseTest {
+public class InfoAuctionTest extends BaseTest {
     private static String auctionId = AuctionHelper.getAuctionId();
-    private static String endpoint = "/auctions/detail/" + auctionId;
+    private static String endpoint = "/auctions/info/" + auctionId;
 
     @BeforeEach
     public void Setup() {
         auctionId = AuctionHelper.getAuctionId(createdAccount);
-        endpoint = "/auctions/detail/" + auctionId;
+        endpoint = "/auctions/info/" + auctionId;
     }
 
     @Test
-    public void TestGetAuctionDetailSuccessfully()  throws Exception {
+    public void TestGetInfoAuctionSuccessfully()  throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint
+                endpoint,
+                authToken
         );
         try {
             CustomResponse response = httpRequest.get();
@@ -34,7 +35,24 @@ public class GetAuctionDetailTest extends BaseTest {
             assertEquals("1000", response.GetResponseCode());
             assertNotNull(response.getResponseData());
         } catch (Exception e) {
-            throw new Exception("Error on get auctions detail request.");
+            throw new Exception("Error on get info auctions request.");
+        }
+    }
+
+    @Test
+    public void TestGetInfoFailNotLogin()  throws Exception {
+
+        HTTPRequest httpRequest = new HTTPRequest(
+                endpoint
+        );
+        try {
+            CustomResponse response = httpRequest.get();
+
+            assertEquals(200, response.getStatusCode());
+            assertNotNull( response.getResponseMessage());
+            assertEquals("1004", response.GetResponseCode());
+        } catch (Exception e) {
+            throw new Exception("Error on get info auctions request.");
         }
     }
 }
