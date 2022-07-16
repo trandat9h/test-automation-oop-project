@@ -73,7 +73,6 @@ public class ReadNewsTest extends BaseTest {
 
         }
     }
-
     @Test
     public void TestReadNotFoundNewsIDFailed () throws Exception{
         String newID = "4";
