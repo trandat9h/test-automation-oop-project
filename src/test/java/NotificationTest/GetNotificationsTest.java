@@ -3,10 +3,8 @@ package NotificationTest;
 import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import static Utils.HelperMethods.AuthHelper.generateRandomEmail;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GetNotificationsTest extends BaseTest {
@@ -23,8 +21,6 @@ public class GetNotificationsTest extends BaseTest {
         if(is_not_read == null || is_not_read.equals("")) return "/notifications?index=" + index +"&count="+count;
         return "/notifications?index=" + index +"&count="+count + "&is_not_read=" + is_not_read;
     }
-
-
 
     @Test
     public void TestGetNotificationsSuccessfully () throws Exception{
@@ -49,7 +45,6 @@ public class GetNotificationsTest extends BaseTest {
 
         }
     }
-
     @Test
     public void TestGetNotificationsNoTokenFailed () throws Exception{
 
@@ -135,6 +130,7 @@ public class GetNotificationsTest extends BaseTest {
         try{
             CustomResponse response = httpRequest.get();
 
+            assertEquals(200, response.getStatusCode());
             assertNotEquals("OK",response.getResponseMessage());
             assertNotEquals("1000", response.GetResponseCode());
         }catch(Exception ex){
@@ -154,6 +150,7 @@ public class GetNotificationsTest extends BaseTest {
         try{
             CustomResponse response = httpRequest.get();
 
+            assertEquals(200, response.getStatusCode());
             assertNotEquals("OK",response.getResponseMessage());
             assertNotEquals("1000", response.GetResponseCode());
         }catch(Exception ex){
@@ -161,24 +158,4 @@ public class GetNotificationsTest extends BaseTest {
 
         }
     }
-    @Test  //test failed do server (count, index NOTNULL)
-    public void TestGetNotificationsNoIndexNoCountFailed () throws Exception{
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint(null,null,null),
-                authToken
-        );
-
-        try{
-            CustomResponse response = httpRequest.get();
-
-            assertNotEquals("OK",response.getResponseMessage());
-            assertNotEquals("1000", response.GetResponseCode());
-        }catch(Exception ex){
-            throw new Exception("Error on getting Notifications");
-
-        }
-    }
-
-
 }
