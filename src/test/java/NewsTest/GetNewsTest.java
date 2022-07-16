@@ -151,7 +151,7 @@ public class GetNewsTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.get();
 
-            assertEquals(500,response.getStatusCode());
+            assertNotEquals(500, response.getStatusCode());
         } catch (Exception ex) {
             throw new Exception("Error on getting News");
 
@@ -169,7 +169,7 @@ public class GetNewsTest extends BaseTest {
         try {
             CustomResponse response = httpRequest.get();
 
-            assertEquals(500,response.getStatusCode());
+            assertNotEquals(500, response.getStatusCode());
         } catch (Exception ex) {
             throw new Exception("Error on getting News");
 
