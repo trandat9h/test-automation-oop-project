@@ -41,7 +41,7 @@ public class CreateCommentTest extends BaseTest {
     public void TestCreateCommentSuccessfully()  throws Exception {
         JSONObject requestBody = buildCreateCommentRequestBody(
                 "abc",
-                1
+                10
         );
 
         HTTPRequest httpRequest = new HTTPRequest(
