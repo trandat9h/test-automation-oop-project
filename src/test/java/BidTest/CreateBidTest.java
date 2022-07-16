@@ -52,12 +52,12 @@ public class CreateBidTest extends BaseTest {
     @Test
     public void TestCreateBidSuccessfully()  throws Exception {
         JSONObject requestBody = buildCreateBidRequestBody(
-                100000,
-                2
+                101000,
+                null
         );
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint,
+                "/bids/create/270",  // this auction is manually approved
                 requestBody,
                 authToken
         );

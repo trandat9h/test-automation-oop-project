@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.Arguments;
 
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
-import Utils.HelperMethods.AuthHelper;
 
 public class EditAccountTest extends BaseTest {
     private static final String endpoint = "/edit";

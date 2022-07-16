@@ -4,13 +4,10 @@ import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
 import Utils.HelperMethods.AuctionHelper;
-import Utils.HelperMethods.DateHelper;
+
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateCommentTest extends BaseTest {
@@ -41,11 +38,11 @@ public class CreateCommentTest extends BaseTest {
     public void TestCreateCommentSuccessfully()  throws Exception {
         JSONObject requestBody = buildCreateCommentRequestBody(
                 "abc",
-                10
+                null
         );
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint,
+                "/comments/create/270",
                 requestBody,
                 authToken
         );
