@@ -132,7 +132,7 @@ public class GetNotificationsTest extends BaseTest {
 
             assertEquals(200, response.getStatusCode());
             assertNotEquals("OK",response.getResponseMessage());
-            assertNotEquals("1000", response.GetResponseCode());
+            assertEquals("1001", response.GetResponseCode());
         }catch(Exception ex){
             throw new Exception("Error on getting Notifications");
 
@@ -158,5 +158,4 @@ public class GetNotificationsTest extends BaseTest {
 
         }
     }
-
 }
