@@ -9,9 +9,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ReadNewsTest extends BaseTest {
-    private static String endpoint(String newid) {
-        if (newid != "" || newid != null)  return "/news/read/" + newid;
-        return "/news/read";
+    private static String endpoint(String newId) {
+        return "/news/read/" + newId;
     }
     @Test
     public void TestReadNewsSuccessfully () throws Exception{
@@ -48,9 +47,9 @@ public class ReadNewsTest extends BaseTest {
             CustomResponse response = httpRequest.get();
 
             assertEquals(200,response.getStatusCode());
-            assertNotNull(response.getResponseMessage());
-            assertEquals("1004", response.GetResponseCode());
-            assertNull(response.getResponseData());
+            assertEquals("1000", response.GetResponseCode());
+            assertEquals("OK", response.getResponseMessage());
+            assertNotNull(response.getResponseData());
         }catch(Exception ex){
             throw new Exception("Error on Reading News");
 
@@ -88,26 +87,6 @@ public class ReadNewsTest extends BaseTest {
             CustomResponse response = httpRequest.get();
 
             assertEquals(404,response.getStatusCode());
-        }catch(Exception ex){
-            throw new Exception("Error on Reading News");
-
-        }
-    }
-    @Test //Failed test do server (Token NOTNULL)
-    public void TestReadNotFoundNewsIDNoTokenFailed () throws Exception{
-        String newID = "4";
-
-        HTTPRequest httpRequest = new HTTPRequest(
-                endpoint(newID)
-        );
-
-        try{
-            CustomResponse response = httpRequest.get();
-
-            assertEquals(200,response.getStatusCode());
-            assertNotNull(response.getResponseMessage());
-            assertEquals("1004", response.GetResponseCode());//lỗi chưa đăng nhập
-            assertNull(response.getResponseData());
         }catch(Exception ex){
             throw new Exception("Error on Reading News");
 

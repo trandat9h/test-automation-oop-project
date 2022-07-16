@@ -22,7 +22,7 @@ public class GetLikesTest extends BaseTest {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "1" + params("1","10"), //    /likes/{statusId}
-                devUser3_Token
+                authToken
         );
 
         try {
@@ -56,7 +56,7 @@ public class GetLikesTest extends BaseTest {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "1"+ params("1",null),   //    /likes/{statusId}
-                devUser3_Token
+                authToken
         );
 
         try {
@@ -71,7 +71,7 @@ public class GetLikesTest extends BaseTest {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "1"+ params(null,"10"), //    /likes/{statusId}
-                devUser3_Token
+                authToken
         );
 
         try {
@@ -86,7 +86,7 @@ public class GetLikesTest extends BaseTest {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "1" + params(null,null), //    /likes/{statusId}
-                devUser3_Token
+                authToken
         );
 
         try {

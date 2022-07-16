@@ -15,7 +15,7 @@ public class GetTotalLikesOfAuctionTest extends BaseTest {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "136",//  /totalLikes/{auctionID}
-                devUser2_Token
+                authToken
         );
 
         try {
@@ -50,14 +50,12 @@ public class GetTotalLikesOfAuctionTest extends BaseTest {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "100000",
-                devUser2_Token
+                authToken
         );
 
         try {
             CustomResponse response = httpRequest.get();
             assertEquals(404, response.getStatusCode());
-            assertNotEquals("OK",response.getResponseMessage());
-            assertNotEquals("1000", response.GetResponseCode());
         } catch (Exception e) {
             throw new Exception("Error on Getting Total Like.");
         }

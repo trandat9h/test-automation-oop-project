@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 //Sử dụng tk devUser3@gmail.com (pass 123456) để tạo các comment, hệ thống lưu các cmt của tất cả người dùng vào cùng 1 bảng phân biệt bằng
-// commentID, tk devUser3@gmail.com có quyền với các commentID: 17,18,19,20,21,22,23,24,25
+// commentID, tk devUser3@gmail.com có quyền với các commentID: 19,20,21,22,23,24,25
 // sau đó dùng tk devUser2@gmail.com (pass 123456) để tạo các comment có commentID: 12:dã bị xóa,(13,14,15,16):chưa bị xóa
 public class DeleteCommentTest extends BaseTest {
     private static String endpoint = "/comments/delete/";
@@ -17,7 +17,7 @@ public class DeleteCommentTest extends BaseTest {
     public void TestDeleteCmtSuccessfully() throws Exception {
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "17",
+                endpoint + "18",
                 devUser3_Token
         );
 

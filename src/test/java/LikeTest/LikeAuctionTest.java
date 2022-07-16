@@ -3,7 +3,6 @@ package LikeTest;
 import Base.BaseTest;
 import Utils.CustomResponse;
 import Utils.HTTPRequest;
-import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,7 +32,7 @@ public class LikeAuctionTest extends BaseTest  {
 
         HTTPRequest httpRequest = new HTTPRequest(
                 endpoint + "136",
-                devUser2_Token
+                authToken
         );
 
         try {
@@ -50,16 +49,13 @@ public class LikeAuctionTest extends BaseTest  {
     public void TestLikeAuctionNotExistedAuctionIDFailed() throws Exception { //AuctionID ko tồn tại tuy nhiên vẫn trả về OK
 
         HTTPRequest httpRequest = new HTTPRequest(
-                endpoint + "100000",
+                endpoint + "10000000",
                 authToken
         );
 
         try {
             CustomResponse response = httpRequest.post();
             assertEquals(404, response.getStatusCode());
-            assertNotEquals("OK",response.getResponseMessage());
-            assertNotEquals("1000", response.GetResponseCode());
-            assertNull(response.getResponseData());
         } catch (Exception e) {
             throw new Exception("Error on Updating Like.");
         }
